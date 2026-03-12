@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Block admin & system paths
+Disallow: /admin/
+Disallow: /login
+Disallow: /register
+
+# Sitemap location
+Sitemap: https://keshoriya.com/sitemap.xml

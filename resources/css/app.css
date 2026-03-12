@@ -1,3 +1,221 @@
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+
+/* ===============================
+   THEME VARIABLES (CHANGE ONCE)
+   =============================== */
+
+
+.bg-brand {
+    background-color: var(--brand-bg);
+}
+
+.text-brand {
+    color: var(--brand-text);
+}
+
+.bg-primary {
+    background-color: var(--button);
+}
+
+.bg-primary-dark {
+    background-color: var(--primary-dark);
+}
+
+.text-primary {
+    color: var(--primary);
+}
+
+.ring-accent {
+    --tw-ring-color: var(--accent);
+}
+
+
+body {
+    font-family: 'Inter', sans-serif;
+
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+.w-32 {
+    width: 26rem !important;
+}
+
+.top-32 {
+    top: 1rem !important;
+}
+
+.left-1\/2 {
+    left: 7% !important;
+}
+
+.testimonial-slide {
+    display: none;
+    animation: fadeIn 0.6s ease;
+}
+
+.testimonial-slide.active {
+    display: block;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    background: #cbd5c0;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: #1f2d1f;
+    transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .pb-28 {
+        padding-bottom: .01rem;
+    }
+
+    .py-20 {
+        padding-top: .5rem;
+        padding-bottom: 1.5rem;
+    }
+}
+
+
+
+
+
+.img-footer {
+    filter: invert(1);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: all 0.35s ease;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.card img {
+    height: 170px;
+    margin: 0 auto;
+    object-fit: contain;
+    transition: transform 0.35s ease;
+}
+
+.card:hover img {
+    transform: scale(1.08);
+}
+
+.card p {
+    margin-top: 22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2d1f;
+}
+
+@layer components {
+    .dashboard-shell {
+        @apply space-y-6 md:space-y-10;
+    }
+
+    .dashboard-hero {
+        @apply relative overflow-hidden rounded-3xl border border-white/60 bg-white/60 backdrop-blur-2xl p-6 sm:p-8;
+        box-shadow: 0 22px 70px rgba(0, 0, 0, 0.10);
+    }
+
+    .dashboard-card {
+        @apply relative overflow-hidden rounded-3xl border border-white/60 bg-white/70 backdrop-blur-xl p-6 transition-all duration-300;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    }
+
+    .stat-label {
+        @apply text-xs font-semibold tracking-wider uppercase text-gray-500;
+    }
+
+    .stat-value {
+        @apply mt-2 text-3xl font-extrabold text-[#1f2d1f];
+    }
+
+    .stat-sub {
+        @apply mt-3 text-xs text-gray-500 flex items-center gap-2;
+    }
+
+    .stat-icon {
+        @apply grid h-12 w-12 place-items-center rounded-2xl text-xl shadow-inner;
+    }
+
+    .action-btn {
+        @apply inline-flex items-center gap-3 rounded-2xl px-5 py-3 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:scale-[1.02];
+    }
+
+    .pill {
+        @apply inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/70 px-3 py-1.5 text-xs font-semibold text-gray-700 shadow-sm;
+    }
+}
+
+/* Hover lift */
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, 0.14);
+}
+
+/* Glow blob */
+.dashboard-card .card-glow {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    height: 140px;
+    width: 140px;
+    border-radius: 9999px;
+    filter: blur(40px);
+    opacity: .55;
+    pointer-events: none;
+}
+
+/* Sheen */
+.dashboard-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transform: translateX(-120%) skewX(-18deg);
+    transition: transform 700ms ease;
+    pointer-events: none;
+}
+
+.dashboard-card:hover::after {
+    transform: translateX(120%) skewX(-18deg);
+}

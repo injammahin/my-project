@@ -4,19 +4,22 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Jobs\AggregateVisitorEvents;
+use App\Models\VisitorEvent;
 
 class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        // Aggregate analytics every 10 minutes
-        $schedule->command('analytics:aggregate')->everyTenMinutes();
+        // 🔁 Aggregate visitor events every hour
+        $schedule->job(new AggregateVisitorEvents)
+            ->hourly()
+            ->withoutOverlapping()
+            ->onOneServer();
 
-        // Clean old raw events daily
+        // 🧹 Clean raw events older than 7 days
         $schedule->call(function () {
-            \App\Models\VisitorEvent::where(
-                'created_at','<',now()->subDays(90)
-            )->delete();
+            VisitorEvent::where('created_at', '<', now()->subDays(7))->delete();
         })->daily();
     }
 
