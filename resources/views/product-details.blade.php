@@ -35,6 +35,59 @@
         $oldPrice = $product->old_price ?? null;
     @endphp
 
+    <style>
+        /* 1. Summernote Content Styling */
+        .description-content {
+            color: #4b5563;
+            line-height: 1.8;
+        }
+
+        /* 2. Green Checkmarks for List Items */
+        .description-content ul {
+            list-style: none !important;
+            padding-left: 0 !important;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .description-content ul li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .description-content ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #16a34a;
+            /* Green-600 */
+            font-weight: bold;
+            background: #f0fdf4;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        /* 3. Image Zoom Effects */
+        .zoom-container {
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+
+        .zoom-container img {
+            transition: transform 0.5s ease;
+        }
+
+        .zoom-container:hover img {
+            transform: scale(1.15);
+        }
+    </style>
+
     <section class="relative overflow-hidden bg-[#f8faf8]">
         <div class="absolute inset-0 pointer-events-none">
             <div class="absolute -top-20 -left-16 w-72 h-72 rounded-full bg-green-100/40 blur-3xl"></div>
@@ -54,11 +107,12 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-[1fr_.95fr] gap-8 lg:gap-12 items-center">
+            <div class="grid grid-cols-1 lg:grid-cols-[1fr_.95fr] gap-8 lg:gap-12 items-start">
                 <div
                     class="rounded-[34px] border border-white/70 bg-white/85 backdrop-blur-xl shadow-[0_18px_60px_rgba(15,23,42,0.07)] overflow-hidden">
-                    <div class="h-[360px] sm:h-[460px] lg:h-[560px] bg-[#f4f7f2]">
-                        <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-full object-cover">
+                    <div class="zoom-container h-[360px] sm:h-[460px] lg:h-[560px] bg-[#f4f7f2]">
+                        <img id="mainProductImage" src="{{ $image }}" alt="{{ $title }}"
+                            class="w-full h-full object-contain">
                     </div>
                 </div>
 
@@ -88,9 +142,9 @@
                         </span>
                     </div>
 
-                    <p class="mt-6 text-[15px] sm:text-base leading-8 text-[#667085]">
-                        {{ $description }}
-                    </p>
+                    <div class="mt-6 description-content">
+                        {!! $description !!}
+                    </div>
 
                     <div class="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div class="rounded-[22px] bg-[#f9fbf9] border border-gray-100 p-4">
@@ -98,17 +152,14 @@
                             <p class="mt-2 text-sm leading-6 text-gray-500">Crafted for a refined and comfortable beauty
                                 routine.</p>
                         </div>
-
                         <div class="rounded-[22px] bg-[#f9fbf9] border border-gray-100 p-4">
                             <h3 class="text-sm font-bold text-[#111827]">Modern Care</h3>
                             <p class="mt-2 text-sm leading-6 text-gray-500">A simple, elegant, and soothing product
                                 experience.</p>
                         </div>
-
                         <div class="rounded-[22px] bg-[#f9fbf9] border border-gray-100 p-4">
                             <h3 class="text-sm font-bold text-[#111827]">Daily Use</h3>
-                            <p class="mt-2 text-sm leading-6 text-gray-500">Perfect for confident everyday self-care and
-                                beauty.</p>
+                            <p class="mt-2 text-sm leading-6 text-gray-500">Perfect for everyday self-care and beauty.</p>
                         </div>
                     </div>
 
@@ -136,14 +187,9 @@
                 <div class="mt-16">
                     <div class="flex items-center justify-between gap-4 mb-8">
                         <div>
-                            <span class="inline-block text-green-600 text-sm font-semibold tracking-wide">
-                                More Products
-                            </span>
-                            <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-[#111827]">
-                                Related Products
-                            </h2>
+                            <span class="inline-block text-green-600 text-sm font-semibold tracking-wide">More Products</span>
+                            <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-[#111827]">Related Products</h2>
                         </div>
-
                         <a href="{{ route('products') }}"
                             class="hidden sm:inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-[#111827] hover:bg-gray-50 transition">
                             View All
@@ -157,7 +203,6 @@
                                 $relatedTitle = $related->title ?? 'Product';
                                 $relatedPrice = (float) ($related->price ?? 0);
                             @endphp
-
                             <div
                                 class="rounded-[28px] border border-white/70 bg-white/85 backdrop-blur-xl shadow-[0_16px_50px_rgba(15,23,42,0.06)] overflow-hidden">
                                 <a href="{{ route('products.show', $related) }}">
@@ -166,22 +211,16 @@
                                             class="w-full h-full object-cover transition duration-500 hover:scale-105">
                                     </div>
                                 </a>
-
                                 <div class="p-5">
                                     <h3 class="text-lg font-bold text-[#111827] leading-tight">
-                                        <a href="{{ route('products.show', $related) }}" class="hover:text-green-700 transition">
-                                            {{ $relatedTitle }}
-                                        </a>
+                                        <a href="{{ route('products.show', $related) }}"
+                                            class="hover:text-green-700 transition">{{ $relatedTitle }}</a>
                                     </h3>
-
                                     <p class="mt-3 text-2xl font-extrabold text-green-700">
-                                        {{ $currency }}{{ number_format($relatedPrice, 2) }}
-                                    </p>
-
+                                        {{ $currency }}{{ number_format($relatedPrice, 2) }}</p>
                                     <a href="{{ route('products.show', $related) }}"
-                                        class="mt-4 inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-[#111827] hover:bg-gray-50 transition">
-                                        View Details
-                                    </a>
+                                        class="mt-4 inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-[#111827] hover:bg-gray-50 transition">View
+                                        Details</a>
                                 </div>
                             </div>
                         @endforeach
@@ -198,19 +237,18 @@
             const qtyPlus = document.getElementById('qtyPlus');
             const addButton = document.getElementById('detailAddToCart');
 
-            qtyMinus?.addEventListener('click', function () {
+            qtyMinus?.addEventListener('click', () => {
                 const current = parseInt(qtyInput.value || 1, 10);
                 qtyInput.value = Math.max(1, current - 1);
             });
 
-            qtyPlus?.addEventListener('click', function () {
+            qtyPlus?.addEventListener('click', () => {
                 const current = parseInt(qtyInput.value || 1, 10);
                 qtyInput.value = current + 1;
             });
 
             addButton?.addEventListener('click', function () {
                 if (!window.LandingCart) return;
-
                 const qty = Math.max(1, parseInt(qtyInput.value || 1, 10));
 
                 for (let i = 0; i < qty; i++) {
@@ -226,6 +264,12 @@
                 this.textContent = 'Added to cart';
                 this.classList.remove('bg-green-600');
                 this.classList.add('bg-green-700');
+
+                setTimeout(() => {
+                    this.textContent = 'Add to cart';
+                    this.classList.add('bg-green-600');
+                    this.classList.remove('bg-green-700');
+                }, 2000);
             });
         });
     </script>

@@ -538,8 +538,22 @@
                     }
 
                     function shortText(text, limit) {
-                        if (!text) return '';
-                        return text.length > limit ? text.substring(0, limit).trim() + '...' : text;
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = text;  // Parse HTML
+
+                        // Get the plain text from HTML
+                        let plainText = tempDiv.textContent || tempDiv.innerText;
+
+                        // If plain text exceeds the limit, truncate it
+                        if (plainText.length > limit) {
+                            plainText = plainText.substring(0, limit) + '...';
+                        }
+
+                        // Set the truncated plain text back to the temporary div
+                        tempDiv.innerHTML = plainText;
+
+                        // Return the truncated HTML content
+                        return tempDiv.innerHTML;
                     }
 
                     function fillCard(card, item, active = false) {
@@ -547,8 +561,8 @@
                         card.querySelector('[data-role="image"]').alt = item.name;
                         card.querySelector('[data-role="name"]').textContent = item.name;
                         card.querySelector('[data-role="description"]').textContent = active
-                            ? shortText(item.description, 150)
-                            : shortText(item.description, 82);
+                            ? shortText(item.description, 80)
+                            : shortText(item.description, 60);
                     }
 
                     function setCardStates() {
@@ -741,7 +755,7 @@
                                 @php
                                     $image = $storageUrl($product->image ?? null);
                                     $title = $product->title ?? 'Product';
-                                    $desc = Str::limit($product->description ?? 'Premium beauty product for your skin and self-care routine.', 60);
+                                    $desc = Str::limit($product->description ?? 'Premium beauty product for your skin and self-care routine.', 62);
                                     $price = $product->price ?? 0;
                                     $oldPrice = $product->old_price ?? null;
                                     $variant = $product->size_label ?? null;
@@ -749,7 +763,7 @@
                                 @endphp
 
                                 <div class="group flex flex-col rounded-[28px] transition-all duration-300
-                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $isFeatured
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $isFeatured
                             ? 'bg-white shadow-[0_18px_55px_rgba(15,23,42,0.10)] border border-gray-100 -translate-y-1'
                             : 'bg-transparent' }}">
 
@@ -781,7 +795,7 @@
                                         </div>
 
                                         <p class="mt-3 text-sm leading-6 text-gray-500 min-h-[48px]">
-                                            {{ $desc }}
+                                            {!! $desc!!}
                                         </p>
 
                                         <div class="mt-3 flex items-center justify-center gap-2">

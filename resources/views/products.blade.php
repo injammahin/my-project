@@ -29,7 +29,20 @@
             return asset('storage/' . $raw);
         };
     @endphp
+    @php
+        function safeTruncate($string, $length = 95, $end = '...')
+        {
+            // Strip HTML tags
+            $string = strip_tags($string);
 
+            // If string is longer than the limit, truncate it
+            if (strlen($string) > $length) {
+                $string = substr($string, 0, $length) . $end;
+            }
+
+            return $string;
+        }
+    @endphp
     <section class="relative overflow-hidden bg-[#f8faf8] min-h-screen">
         <!-- premium background decoration -->
         <div class="absolute inset-0 pointer-events-none">
@@ -142,7 +155,8 @@
                                 </div>
 
                                 <p class="mt-4 text-sm leading-7 text-[#667085] min-h-[78px]">
-                                    {{ $shortDescription }}
+                                    {{ safeTruncate($description, 95) }}
+
                                 </p>
 
                                 <div class="mt-6 flex flex-col gap-3">
