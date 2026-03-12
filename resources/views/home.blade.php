@@ -749,7 +749,7 @@
                                 @endphp
 
                                 <div class="group flex flex-col rounded-[28px] transition-all duration-300
-                                                                                                                                                                                                                                                                                        {{ $isFeatured
+                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $isFeatured
                             ? 'bg-white shadow-[0_18px_55px_rgba(15,23,42,0.10)] border border-gray-100 -translate-y-1'
                             : 'bg-transparent' }}">
 
@@ -946,7 +946,7 @@
                                             <div class="flex items-center gap-1">
                                                 @for($i = 0; $i < 5; $i++)
                                                     <span
-                                                        class="w-8 h-8 rounded-sm bg-[#14a44d] text-white flex items-center justify-center shadow-sm">
+                                                        class="w-6 h-6 rounded-sm bg-[#14a44d] text-white flex items-center justify-center shadow-sm">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 20 20"
                                                             fill="currentColor">
                                                             <path
@@ -955,7 +955,7 @@
                                                     </span>
                                                 @endfor
                                             </div>
-                                            <span class="text-2xl text-gray-500 font-medium">5.0</span>
+                                            <span class="text-lg text-gray-500 font-medium">5.0</span>
                                         </div>
 
                                         <!-- Content -->

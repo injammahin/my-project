@@ -7,7 +7,7 @@
     <title>@yield('title', 'Admin Panel')</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -268,6 +268,7 @@
 
     <!-- ================= SCRIPTS ================= -->
     <script>
+
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('-translate-x-full');
             document.getElementById('sidebarOverlay').classList.toggle('hidden');
@@ -281,7 +282,8 @@
             document.getElementById('logoutModal').classList.add('hidden');
         }
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     @stack('scripts')
 
 </body>

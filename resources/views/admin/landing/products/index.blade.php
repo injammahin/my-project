@@ -88,7 +88,7 @@
                     <div class="md:col-span-2">
                         <label class="text-sm font-semibold text-gray-700">Short Description</label>
                         <textarea name="description" rows="4"
-                            class="mt-2 w-full rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                            class="mt-2 summernote w-full rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
                             placeholder="Write a simple 3/4 line product description...">{{ old('description') }}</textarea>
                         <p class="text-xs text-gray-500 mt-1">This will be shown in the product information section.</p>
                     </div>
@@ -301,7 +301,7 @@
                                                             <div class="md:col-span-2">
                                                                 <label class="text-sm font-semibold text-gray-700">Short Description</label>
                                                                 <textarea name="description" rows="4"
-                                                                        class="mt-2 w-full rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
+                                                                        class="mt-2 summernote w-full rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500"
                                                                         placeholder="Write a simple 3/4 line product description...">{{ old('description', $p->description) }}</textarea>
                                                                 <p class="text-xs text-gray-500 mt-1">This will be shown in the product information section.</p>
                                                             </div>
@@ -396,12 +396,37 @@
 
 @push('scripts')
 <script>
+    $(document).ready(function() {
+        // 1. Initialize Summernote for the main "Add Product" form
+        $('.summernote').summernote({
+            placeholder: 'Write a detailed product description...',
+            tabsize: 2,
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    });
+
+    // 2. Combined Modal Functions
     function openEditModal(id) {
         const el = document.getElementById('editModal-' + id);
         if (!el) return;
 
         el.classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
+        
+        // CRITICAL: Initialize or refresh Summernote inside the modal after it becomes visible
+        $(el).find('.summernote').summernote({
+            tabsize: 2,
+            height: 200
+        });
     }
 
     function closeEditModal(id) {
@@ -412,11 +437,12 @@
         document.body.classList.remove('overflow-hidden');
     }
 
+    // 3. Global Listeners for UX
     document.addEventListener('click', function (e) {
         const modal = e.target.closest('[id^="editModal-"]');
         if (modal && e.target === modal) {
-            modal.classList.add('hidden');
-            document.body.classList.remove('overflow-hidden');
+            const id = modal.id.split('-')[1];
+            closeEditModal(id);
         }
     });
 
@@ -424,10 +450,10 @@
         if (e.key === 'Escape') {
             document.querySelectorAll('[id^="editModal-"]').forEach(modal => {
                 if (!modal.classList.contains('hidden')) {
-                    modal.classList.add('hidden');
+                    const id = modal.id.split('-')[1];
+                    closeEditModal(id);
                 }
             });
-            document.body.classList.remove('overflow-hidden');
         }
     });
 </script>

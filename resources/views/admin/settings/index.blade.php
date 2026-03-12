@@ -467,8 +467,8 @@
                 </div>
 
                 <button type="submit" class="inline-flex items-center justify-center gap-2
-                               px-7 py-3 rounded-full text-white font-semibold
-                               shadow-lg hover:shadow-xl transition hover:scale-[1.01]"
+                                   px-7 py-3 rounded-full text-white font-semibold
+                                   shadow-lg hover:shadow-xl transition hover:scale-[1.01]"
                     style="background: linear-gradient(90deg, {{ $btnColor }}, #111827);">
                     <i class="fa-solid fa-floppy-disk"></i>
                     Save Settings
@@ -478,7 +478,7 @@
             {{-- Mobile sticky button --}}
             <div class="fixed left-0 right-0 bottom-0 p-4 bg-white/70 backdrop-blur-xl border-t sm:hidden">
                 <button type="submit" class="w-full inline-flex items-center justify-center gap-2
-                               px-6 py-3 rounded-full text-white font-semibold shadow-lg"
+                                   px-6 py-3 rounded-full text-white font-semibold shadow-lg"
                     style="background: {{ $btnColor }};">
                     <i class="fa-solid fa-floppy-disk"></i>
                     Save Settings
