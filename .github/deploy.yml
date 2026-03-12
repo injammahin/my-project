@@ -1,0 +1,14 @@
+- name: Execute Remote SSH Commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/cfbusygx/keshoriya_website
+            git pull origin main
+            /usr/local/bin/php artisan migrate --force
+            /usr/local/bin/php artisan config:cache
+            /usr/local/bin/php artisan route:cache
+            /usr/local/bin/php artisan view:cache

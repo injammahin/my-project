@@ -27,7 +27,7 @@ class LandingTestimonialController extends Controller
             'message' => 'required|string',
             'sort_order' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|max:10240',
         ]);
 
         $data['is_active'] = $request->boolean('is_active', true);
