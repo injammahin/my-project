@@ -9,6 +9,20 @@
         // Assuming $currencySymbol is passed in from the controller
         $currencySymbol = $currencySymbol ?? '$';  // default to '$' if not set
     @endphp
+        @php
+        function safeTruncate($string, $length = 95, $end = '...')
+        {
+            // Strip HTML tags
+            $string = strip_tags($string);
+
+            // If string is longer than the limit, truncate it
+            if (strlen($string) > $length) {
+                $string = substr($string, 0, $length) . $end;
+            }
+
+            return $string;
+        }
+    @endphp
 
     <section class="relative overflow-hidden bg-[#f8faf8] min-h-screen">
         <!-- Background decoration for premium look -->
@@ -45,8 +59,8 @@
                         @php
                             $image = asset('storage/' . $product->image ?? 'default-image.jpg');
                             $title = $product->title ?? 'Premium Combo';
-                            $description = $product->description ?: 'A carefully curated combo pack for your beauty and self-care.';
-                            $shortDescription = Str::limit($description, 95);
+                            $description = $product->description ;
+                            $shortDescription = Str::limit($description,);
                             $price = (float) ($product->sale_price ?? 0);
                             $oldPrice = $product->regular_price ?? null;
                             $gift = $product->gift_name ?? null; // Gift name check
@@ -125,11 +139,13 @@
                                     <span class="ml-1 text-xs font-medium text-gray-500">5.0</span>
                                 </div>
 
-                                <p class="mt-4 text-sm leading-7 text-[#667085] min-h-[78px]">
-                                    {!! $description !!}
+                                 <p class="mt-4 text-sm leading-7 text-[#667085] min-h-[78px]">
+                                    {{ safeTruncate($description, 95) }}
+
                                 </p>
 
-                                <div class="mt-6 flex flex-col gap-3">
+
+                                <div class="mt-4 flex flex-col gap-3">
                                     <a href="{{ route('combo-products.show', $product) }}"
                                         class="inline-flex items-center justify-center rounded-full border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-[#111827] hover:bg-gray-50 transition">
                                         View Details
