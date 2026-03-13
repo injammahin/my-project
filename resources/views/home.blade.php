@@ -4,7 +4,7 @@
     <section class="relative min-h-[85vh] sm:min-h-screen overflow-hidden">
         <!-- Background Image -->
         <div class="absolute ">
-            <img src="/img/img.jpg" alt="Beauty Hero Background" class="w-full h-full object-cover object-center">
+            <img src="/img/hero1.jpg" alt="Beauty Hero Background" class="w-full h-full object-cover object-center">
         </div>
 
         <!-- Content -->
@@ -137,8 +137,7 @@
                             </div>
                             <div class="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-white"></div>
                             <div class="relative w-full h-full p-[6px] rounded-full bg-white shadow-inner">
-                                <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=600&q=80"
-                                    alt="Massage Hair Oil"
+                                <img src="/img/steo1.jpeg" alt="Massage Hair Oil"
                                     class="w-full h-full rounded-full object-cover group-hover:scale-105 transition duration-500">
                             </div>
                         </div>
@@ -147,10 +146,11 @@
                             Massage Hair Oil
                         </h3>
                         <p class="mt-1 text-sm font-semibold text-green-700">
-                            (১০ মিনিট)
+                            (10 minutes Oil Massage)
                         </p>
                         <p class="mt-4 text-sm leading-7 text-[#66756d]">
-                            Relax the scalp with a nourishing oil massage to improve comfort, softness, and natural shine.
+                            Apply Keshoriya Organic Hair Oil to the scalp and massage gently to boost circulation and
+                            nourish roots.
                         </p>
                     </div>
 
@@ -164,21 +164,20 @@
                             </div>
                             <div class="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-white"></div>
                             <div class="relative w-full h-full p-[6px] rounded-full bg-white shadow-inner">
-                                <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=600&q=80"
-                                    alt="Herbal Shampoo Wash"
+                                <img src="/img/steo2.jpeg" alt="Herbal Shampoo Wash"
                                     class="w-full h-full rounded-full object-cover group-hover:scale-105 transition duration-500">
                             </div>
                         </div>
 
                         <h3 class="mt-6 text-[18px] font-extrabold uppercase tracking-tight text-[#16211b] leading-6">
-                            Herbal Shampoo Wash
+                            Protein Hair Pack
                         </h3>
                         <p class="mt-1 text-sm font-semibold text-green-700">
-                            (প্রতি ১৫ মিনিট)
+                            (30-40 minutes hair Protein pack)
                         </p>
                         <p class="mt-4 text-sm leading-7 text-[#66756d]">
-                            Cleanse gently with herbal shampoo to remove buildup while keeping the hair fresh and balanced.
-                        </p>
+                            ​Mix the Raw Hair Protein Pack and apply thoroughly to hair strands to repair damage and add
+                            strength. </p>
                     </div>
 
                     <!-- Step 3 -->
@@ -191,21 +190,19 @@
                             </div>
                             <div class="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-white"></div>
                             <div class="relative w-full h-full p-[6px] rounded-full bg-white shadow-inner">
-                                <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=600&q=80"
-                                    alt="Protein Hair Pack"
+                                <img src="/img/steo3.jpeg" alt="Protein Hair Pack"
                                     class="w-full h-full rounded-full object-cover group-hover:scale-105 transition duration-500">
                             </div>
                         </div>
 
                         <h3 class="mt-6 text-[18px] font-extrabold uppercase tracking-tight text-[#16211b] leading-6">
-                            Protein Hair Pack
+                            Shampoo wash
                         </h3>
                         <p class="mt-1 text-sm font-semibold text-green-700">
-                            (প্রতি ৩০ মিনিট)
+                            (10 minutes shampoo wash)
                         </p>
                         <p class="mt-4 text-sm leading-7 text-[#66756d]">
-                            Restore moisture and smoothness with a rich protein pack for healthier texture and strength.
-                        </p>
+                            ​Wash away impurities and excess oil with Silk & Radiance Shampoo for a fresh, clean scalp. </p>
                     </div>
 
                     <!-- Step 4 -->
@@ -218,21 +215,19 @@
                             </div>
                             <div class="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-white"></div>
                             <div class="relative w-full h-full p-[6px] rounded-full bg-white shadow-inner">
-                                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80"
-                                    alt="Revitalize"
+                                <img src="/img/steo4.jpeg" alt="Revitalize"
                                     class="w-full h-full rounded-full object-cover group-hover:scale-105 transition duration-500">
                             </div>
                         </div>
 
                         <h3 class="mt-6 text-[18px] font-extrabold uppercase tracking-tight text-[#16211b] leading-6">
-                            Revitalize
+                            Safe Drying
                         </h3>
                         <p class="mt-1 text-sm font-semibold text-green-700">
-                            (চুলের যত্নে উজ্জ্বলতা)
+                            (10 minutes Safe Drying)
                         </p>
                         <p class="mt-4 text-sm leading-7 text-[#66756d]">
-                            Finish the routine with a refreshing care step for a polished, soft, and glowing result.
-                        </p>
+                            ​Wrap your hair with the Microfiber Towel to dry gently, preventing frizz and breakage. </p>
                     </div>
                 </div>
             </div>
@@ -763,7 +758,7 @@
                                 @endphp
 
                                 <div class="group flex flex-col rounded-[28px] transition-all duration-300
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $isFeatured
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $isFeatured
                             ? 'bg-white shadow-[0_18px_55px_rgba(15,23,42,0.10)] border border-gray-100 -translate-y-1'
                             : 'bg-transparent' }}">
 
@@ -933,7 +928,7 @@
 
                             <div
                                 class="group flex flex-col rounded-[28px] transition-all duration-300
-                                                                                                                                                                                                    {{ $isFeatured ? 'bg-white shadow-[0_18px_55px_rgba(15,23,42,0.10)] border border-gray-100 -translate-y-1' : 'bg-transparent' }}">
+                                                                                                                                                                                                                                                                                                                {{ $isFeatured ? 'bg-white shadow-[0_18px_55px_rgba(15,23,42,0.10)] border border-gray-100 -translate-y-1' : 'bg-transparent' }}">
 
                                 <!-- Product Image Section -->
                                 <div class="rounded-[24px] overflow-hidden h-[280px] sm:h-[320px] w-full bg-[#f8faf7]">
