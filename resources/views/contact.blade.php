@@ -181,7 +181,7 @@
                         </div>
 
                         <!-- Google reCAPTCHA -->
-                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+                        {{-- <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div> --}}
 
                         <div class="sm:col-span-2">
                             <button type="submit"

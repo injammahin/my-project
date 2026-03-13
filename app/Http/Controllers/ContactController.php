@@ -23,7 +23,7 @@ class ContactController extends Controller
             'phone' => 'nullable|string|max:15',
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
-            'g-recaptcha-response' => 'required|captcha',
+            // 'g-recaptcha-response' => 'required|captcha',
         ]);
 
         try {
