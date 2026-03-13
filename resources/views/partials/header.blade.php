@@ -46,6 +46,24 @@
     .cart-scroll::-webkit-scrollbar-track {
         background: transparent;
     }
+
+    .sticky-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        padding: 1rem;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        /* Optional shadow for visibility */
+        z-index: 9999;
+    }
+
+    .sticky-footer .subtotal,
+    .sticky-footer .checkout {
+        width: 100%;
+        margin: 0;
+    }
 </style>
 
 <!-- Top toast -->
@@ -272,21 +290,23 @@
     <div id="mobileCartItems" class="cart-scroll flex-1 overflow-y-auto px-4 py-4 space-y-3"></div>
 
     <div class="border-t border-gray-100 px-5 py-4 bg-[#fbfdfb]">
-        <div class="flex items-center justify-between text-sm text-gray-500">
-            <span>Subtotal</span>
-            <span id="mobileCartSubtotal" class="text-lg font-bold text-[#111827]">{{ $currencySymbol }}0.00</span>
-        </div>
+        <div class="sticky-footer">
+            <div class="flex items-center justify-between text-sm text-gray-500">
+                <span>Subtotal</span>
+                <span id="mobileCartSubtotal" class="text-lg font-bold text-[#111827]">{{ $currencySymbol }}0.00</span>
+            </div>
 
-        <div class="mt-4 grid grid-cols-2 gap-3">
-            <button type="button" id="mobileClearCart"
-                class="rounded-full border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
-                Clear
-            </button>
+            <div class="mt-4 grid grid-cols-2 gap-3">
+                <button type="button" id="mobileClearCart"
+                    class="rounded-full border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
+                    Clear
+                </button>
 
-            <a href="{{ url('/checkout') }}"
-                class="rounded-full bg-green-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-green-700 transition">
-                Checkout
-            </a>
+                <a href="{{ url('/checkout') }}"
+                    class="rounded-full bg-green-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-green-700 transition">
+                    Checkout
+                </a>
+            </div>
         </div>
     </div>
 </aside>
