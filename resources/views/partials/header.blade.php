@@ -76,6 +76,7 @@
                 <a href="{{ route('landing') }}" class="site-nav-link">Home</a>
                 <a href="{{ route('about') }}" class="site-nav-link">About Us</a>
                 <a href="{{ route('products') }}" class="site-nav-link">Products</a>
+                <a href="{{ route('combo') }}" class="site-nav-link">Combo</a>
                 <a href="{{ route('blog') }}" class="site-nav-link">Blog</a>
                 <a href="{{ route('contact') }}" class="site-nav-link">Contact</a>
             </nav>
@@ -234,6 +235,10 @@
         <a href="{{ route('products') }}"
             class="block rounded-xl px-4 py-3 text-[17px] font-medium text-gray-800 hover:bg-green-50 hover:text-green-600 transition">
             Products
+        </a>
+        <a href="{{ route('combo') }}"
+            class="block rounded-xl px-4 py-3 text-[17px] font-medium text-gray-800 hover:bg-green-50 hover:text-green-600 transition">
+            Combo
         </a>
         <a href="{{ route('blog') }}"
             class="block rounded-xl px-4 py-3 text-[17px] font-medium text-gray-800 hover:bg-green-50 hover:text-green-600 transition">

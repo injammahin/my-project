@@ -21,13 +21,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $pageTitle }}</title>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    @stack('styles')
 
     <style>
         :root {
@@ -104,6 +102,19 @@
             transform: translateY(0) scale(1);
             pointer-events: auto;
         }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(31, 45, 31, 0.2);
+            border-radius: 999px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
     </style>
 </head>
 
@@ -111,16 +122,28 @@
 
     @include('partials.header')
 
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-gray-800 text-white px-6 py-4">
+        <a href="{{ route('landing') }}" class="block py-2">Home</a>
+        <a href="{{ route('about') }}" class="block py-2">About Us</a>
+        <a href="{{ route('products') }}" class="block py-2">Products</a>
+        <a href="{{ route('blog') }}" class="block py-2">Blog</a>
+        <a href="{{ route('contact') }}" class="block py-2">Contact Us</a>
+    </div>
+
+    <!-- Main Content -->
     <main>
         @yield('content')
     </main>
 
-    <div class="fixed right-4 sm:right-6 bottom-4 sm:bottom-6 z-[999] flex flex-col items-end gap-3">
+    <!-- Floating Buttons -->
+    <div class="fixed  right-4 sm:right-6 bottom-4 sm:bottom-6 z-[999] flex flex-col items-end gap-3">
 
         <!-- WhatsApp Chat Card -->
         <div id="whatsappChatCard"
             class="chat-card-enter transition-all duration-300 w-[calc(100vw-2rem)] max-w-[360px] rounded-[28px] overflow-hidden border border-white/70 bg-white/95 backdrop-blur-xl shadow-[0_25px_80px_rgba(15,23,42,0.18)]">
 
+            <!-- Header -->
             <div class="px-5 py-4 text-white" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
                 <div class="flex items-start justify-between gap-4">
                     <div class="flex items-center gap-3">
@@ -151,11 +174,19 @@
                 </div>
             </div>
 
+            <!-- Body -->
             <div class="p-4 bg-[#f6fbf7]">
                 <div class="rounded-2xl bg-white p-4 border border-green-100 shadow-sm">
                     <p class="text-sm leading-7 text-gray-700">
                         {{ $whatsappWelcome }}
                     </p>
+                </div>
+
+                <div class="mt-4">
+                    {{-- <label class="block text-sm font-semibold text-[#111827] mb-2">Message</label> --}}
+                    {{-- <textarea id="whatsappMessage" rows="4"
+                        class="custom-scroll w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 outline-none resize-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition text-sm"
+                        placeholder="Type your message..."></textarea> --}}
                 </div>
 
                 <button id="sendWhatsappMessage" type="button"
@@ -166,13 +197,15 @@
                         <line x1="22" y1="2" x2="11" y2="13" />
                         <polygon points="22 2 15 22 11 13 2 9 22 2" />
                     </svg>
-                    Open WhatsApp
+                    open wtsapp
                 </button>
+
+
             </div>
         </div>
 
+        <!-- Scroll to top -->
         <div class="flex gap-4">
-            <!-- Scroll to top -->
             <button id="scrollTopBtn" type="button"
                 class="floating-btn bg-white text-[#111827] border border-gray-200 hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
@@ -194,9 +227,8 @@
         </div>
     </div>
 
+    <!-- Footer -->
     @include('partials.footer')
-
-    @stack('scripts')
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -204,32 +236,23 @@
             const openWhatsappCard = document.getElementById('openWhatsappCard');
             const closeWhatsappCard = document.getElementById('closeWhatsappCard');
             const whatsappChatCard = document.getElementById('whatsappChatCard');
+            const whatsappMessage = document.getElementById('whatsappMessage');
             const sendWhatsappMessage = document.getElementById('sendWhatsappMessage');
 
             const whatsappNumber = @json($whatsappNumber);
-            const whatsappDefaultMessage = @json($whatsappDefaultMessage);
 
             function openCard() {
-                if (!whatsappChatCard) return;
                 whatsappChatCard.classList.remove('chat-card-enter');
                 whatsappChatCard.classList.add('chat-card-open');
             }
 
             function closeCard() {
-                if (!whatsappChatCard) return;
                 whatsappChatCard.classList.remove('chat-card-open');
                 whatsappChatCard.classList.add('chat-card-enter');
             }
 
-            function openWhatsappDirect() {
-                const message = (whatsappDefaultMessage || 'Hello').trim();
-                const encodedMessage = encodeURIComponent(message);
-                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-                window.open(whatsappUrl, '_blank');
-            }
-
             openWhatsappCard?.addEventListener('click', function () {
-                if (whatsappChatCard?.classList.contains('chat-card-open')) {
+                if (whatsappChatCard.classList.contains('chat-card-open')) {
                     closeCard();
                 } else {
                     openCard();
@@ -241,7 +264,17 @@
             });
 
             sendWhatsappMessage?.addEventListener('click', function () {
-                openWhatsappDirect();
+                const message = (whatsappMessage?.value || '').trim();
+
+                if (!message) {
+                    whatsappMessage?.focus();
+                    return;
+                }
+
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+                window.open(whatsappUrl, '_blank');
             });
 
             scrollTopBtn?.addEventListener('click', function () {
@@ -252,8 +285,6 @@
             });
 
             window.addEventListener('scroll', function () {
-                if (!scrollTopBtn) return;
-
                 if (window.scrollY > 300) {
                     scrollTopBtn.classList.remove('hidden');
                 } else {
@@ -262,12 +293,7 @@
             });
 
             document.addEventListener('click', function (e) {
-                if (
-                    whatsappChatCard &&
-                    openWhatsappCard &&
-                    !whatsappChatCard.contains(e.target) &&
-                    !openWhatsappCard.contains(e.target)
-                ) {
+                if (!whatsappChatCard.contains(e.target) && !openWhatsappCard.contains(e.target)) {
                     closeCard();
                 }
             });

@@ -117,7 +117,23 @@
                     <p class="mt-3 text-sm leading-7 text-[#667085]">{{ $contactHours }}</p>
                 </div>
             </div>
+            @if(session('success'))
+                <div class="bg-green-500 text-white font-bold py-3 px-5 rounded-lg shadow-lg mb-4 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
+                    <svg class="inline-block w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11l2 2-4 4-2-2 2-2 2 2zm0 0l-2 2 2 2z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
 
+            @if(session('error'))
+                <div class="bg-red-500 text-white font-bold py-3 px-5 rounded-lg shadow-lg mb-4 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
+                    <svg class="inline-block w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11l2 2-4 4-2-2 2-2 2 2zm0 0l-2 2 2 2z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>{{ session('error') }}</span>
+                </div>
+            @endif
             <!-- Main Contact Area -->
             <div class="mt-10 grid grid-cols-1 lg:grid-cols-[1fr_.9fr] gap-8">
                 <!-- Contact Form -->
@@ -127,44 +143,48 @@
                         Let’s talk with you
                     </h2>
 
-                    <form class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <form action="{{ route('contact.store') }}" method="POST" class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        @csrf
                         <div>
                             <label class="block text-sm font-semibold text-[#111827] mb-2">Your Name</label>
-                            <input type="text"
+                            <input type="text" name="name"
                                 class="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition"
-                                placeholder="Enter your full name">
+                                placeholder="Enter your full name" required>
                         </div>
 
                         <div>
                             <label class="block text-sm font-semibold text-[#111827] mb-2">Phone Number</label>
-                            <input type="text"
+                            <input type="text" name="phone"
                                 class="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition"
                                 placeholder="Enter your phone">
                         </div>
 
                         <div class="sm:col-span-2">
                             <label class="block text-sm font-semibold text-[#111827] mb-2">Email Address</label>
-                            <input type="email"
+                            <input type="email" name="email"
                                 class="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition"
-                                placeholder="Enter your email">
+                                placeholder="Enter your email" required>
                         </div>
 
                         <div class="sm:col-span-2">
                             <label class="block text-sm font-semibold text-[#111827] mb-2">Subject</label>
-                            <input type="text"
+                            <input type="text" name="subject"
                                 class="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 outline-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition"
-                                placeholder="Write your subject">
+                                placeholder="Write your subject" required>
                         </div>
 
                         <div class="sm:col-span-2">
                             <label class="block text-sm font-semibold text-[#111827] mb-2">Message</label>
-                            <textarea rows="6"
+                            <textarea rows="6" name="message"
                                 class="w-full rounded-2xl border border-gray-200 bg-white px-5 py-4 outline-none resize-none focus:border-green-500 focus:ring-4 focus:ring-green-100 transition"
-                                placeholder="Write your message..."></textarea>
+                                placeholder="Write your message..." required></textarea>
                         </div>
 
+                        <!-- Google reCAPTCHA -->
+                        <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
+
                         <div class="sm:col-span-2">
-                            <button type="button"
+                            <button type="submit"
                                 class="inline-flex items-center justify-center rounded-full px-8 py-4 text-white font-semibold shadow-[0_12px_30px_rgba(22,163,74,0.22)] hover:opacity-90 transition"
                                 style="background: {{ $buttonColor }};">
                                 Send Message

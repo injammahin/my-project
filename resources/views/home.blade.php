@@ -746,7 +746,7 @@
 
                         <h2
                             class="mt-2 text-[28px] sm:text-[38px] lg:text-[48px] leading-tight font-extrabold tracking-tight text-[#111827]">
-                            Our Best Sellers
+                            Our Best Seller Products
                         </h2>
                     </div>
 
@@ -763,7 +763,7 @@
                                 @endphp
 
                                 <div class="group flex flex-col rounded-[28px] transition-all duration-300
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $isFeatured
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $isFeatured
                             ? 'bg-white shadow-[0_18px_55px_rgba(15,23,42,0.10)] border border-gray-100 -translate-y-1'
                             : 'bg-transparent' }}">
 
@@ -823,6 +823,7 @@
                 </div>
             </div>
 
+            {{--
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     const buttons = document.querySelectorAll('.add-to-cart-btn');
@@ -862,9 +863,175 @@
                     window.addEventListener('landing-cart-updated', syncButtons);
                     syncButtons();
                 });
+            </script> --}}
+        </section>
+    @endif
+    @php
+
+        $storageUrl = function ($raw) {
+            if (!$raw) {
+                return 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=1200&q=80';
+            }
+
+            if (Str::startsWith($raw, ['http://', 'https://'])) {
+                return $raw;
+            }
+
+            $raw = ltrim($raw, '/');
+
+            if (Str::startsWith($raw, 'storage/')) {
+                return asset($raw);
+            }
+
+            return asset('storage/' . $raw);
+        };
+
+        $currency = $settings['currency_symbol'] ?? '$';
+        $bestSellers = collect($comboProducts)
+            ->filter(fn($p) => (int) ($p->is_active ?? 1) === 1)
+            ->sortBy('sort_order')
+            ->take(3)
+            ->values();
+    @endphp
+
+    @if($bestSellers->count())
+        <section class="relative bg-[#f6f7f5] py-16 sm:py-20 lg:py-24 overflow-hidden">
+            <!-- Decorative Leaf -->
+            <div class="absolute left-0 bottom-0 w-28 sm:w-36 lg:w-48 opacity-95 pointer-events-none">
+                <img src="https://gallery.yopriceville.com/var/resizes/Free-Clipart-Pictures/Decorative-Elements-PNG/Tropical_Palm_Leaf_PNG_Clipart.png?m=1629830804"
+                    alt="Tropical Palm Leaf">
+            </div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="relative rounded-[36px] bg-white shadow-[0_30px_90px_rgba(15,23,42,0.08)] px-5 sm:px-8 lg:px-12 py-10 sm:py-12 lg:py-14 overflow-hidden">
+
+                    <!-- Background Circle Blurs -->
+                    <div class="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-green-50 blur-3xl pointer-events-none">
+                    </div>
+                    <div class="absolute -bottom-10 right-10 w-40 h-40 rounded-full bg-emerald-50 blur-3xl pointer-events-none">
+                    </div>
+
+                    <div class="text-center relative z-10">
+                        <span class="inline-block text-green-600 text-sm font-semibold tracking-wide">Order Now.</span>
+                        <h2
+                            class="mt-2 text-[28px] sm:text-[38px] lg:text-[48px] leading-tight font-extrabold tracking-tight text-[#111827]">
+                            Our Best Seller Combo Products
+                        </h2>
+                    </div>
+
+                    <div class="relative z-10 mt-10 sm:mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                        @foreach($bestSellers as $index => $product)
+                            @php
+                                $image = $storageUrl($product->image ?? null);
+                                $title = $product->title ?? 'Product';
+                                $desc = Str::limit($product->description ?? 'Premium combo product for your skin and self-care routine.', 62);
+                                $price = $product->sale_price ?? 0;
+                                $oldPrice = $product->regular_price ?? null;
+                                $variant = $product->size_label ?? null;
+                                $isFeatured = $index === 1;
+                            @endphp
+
+                            <div
+                                class="group flex flex-col rounded-[28px] transition-all duration-300
+                                                                                                                                                                                                    {{ $isFeatured ? 'bg-white shadow-[0_18px_55px_rgba(15,23,42,0.10)] border border-gray-100 -translate-y-1' : 'bg-transparent' }}">
+
+                                <!-- Product Image Section -->
+                                <div class="rounded-[24px] overflow-hidden h-[280px] sm:h-[320px] w-full bg-[#f8faf7]">
+                                    <img src="{{ $image }}" alt="{{ $title }}"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]">
+                                </div>
+
+                                <div class="px-4 sm:px-5 pt-5 pb-6 text-center">
+                                    <h3 class="text-[16px] sm:text-[17px] font-medium text-[#111827] leading-6">{{ $title }}</h3>
+
+                                    @if($variant)
+                                        <p class="mt-1 text-xs text-gray-400">{{ $variant }}</p>
+                                    @endif
+
+                                    <div class="mt-3 flex items-center justify-center gap-1 text-[#f7c948]">
+                                        @for($i = 0; $i < 5; $i++)
+                                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 20 20" fill="currentColor">
+                                                <path
+                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.176 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81H7.03a1 1 0 00.951-.69l1.07-3.292z" />
+                                            </svg>
+                                        @endfor
+                                        <span class="ml-1 text-xs text-gray-500">5.0</span>
+                                    </div>
+
+                                    <p class="mt-3 text-sm leading-6 text-gray-500 min-h-[48px]">{!! $desc !!}</p>
+
+                                    <div class="mt-3 flex items-center justify-center gap-2">
+                                        @if($oldPrice && $oldPrice > $price)
+                                            <span class="text-sm text-gray-400 line-through">
+                                                {{ $currency }}{{ number_format($oldPrice, 2) }}
+                                            </span>
+                                        @endif
+
+                                        <span class="text-[22px] font-bold text-green-700">
+                                            {{ $currency }}{{ number_format($price, 2) }}
+                                        </span>
+                                    </div>
+
+                                    <button type="button"
+                                        class="mt-5 inline-flex items-center justify-center rounded-full bg-green-600 px-6 py-3 text-white text-sm font-semibold shadow-sm hover:bg-green-700 transition duration-300 add-to-cart-btn"
+                                        data-add-cart data-id="{{ $product->id }}" data-title="{{ $title }}"
+                                        data-price="{{ $price }}" data-image="{{ $image }}" data-variant="{{ $variant }}">
+                                        Add to cart
+                                    </button>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const buttons = document.querySelectorAll('.add-to-cart-btn');
+
+                    function syncButtons() {
+                        if (!window.LandingCart) return;
+
+                        const cart = window.LandingCart.getCart();
+                        const ids = cart.map(item => String(item.id));
+
+                        buttons.forEach(button => {
+                            const inCart = ids.includes(String(button.dataset.id));
+                            button.textContent = inCart ? 'Added to cart' : 'Add to cart';
+                            button.classList.toggle('bg-green-700', inCart);
+                            button.classList.toggle('bg-green-600', !inCart);
+                        });
+                    }
+
+                    buttons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            if (!window.LandingCart) return;
+
+                            const price = this.dataset.sale_price || this.dataset.price;
+
+                            window.LandingCart.add({
+                                id: this.dataset.id,
+                                title: this.dataset.title,
+                                price: price,
+                                image: this.dataset.image,
+                                variant: this.dataset.variant || '',
+                            });
+
+                            this.textContent = 'Added to cart';
+                            this.classList.remove('bg-green-600');
+                            this.classList.add('bg-green-700');
+                        });
+                    });
+
+                    window.addEventListener('landing-cart-updated', syncButtons);
+                    syncButtons();
+                });
             </script>
         </section>
     @endif
+
+
+
     {{-- ================= TESTIMONIALS ================= --}}
     @php
         $testimonialTitle = $settings['testimonial_title'] ?? 'What Our Customers Are Saying';

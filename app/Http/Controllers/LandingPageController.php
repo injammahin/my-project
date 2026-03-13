@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\LandingProduct;
 use App\Models\LandingIngredient;
 use App\Models\LandingTestimonial;
+use App\Models\ComboProduct;
 
 class LandingPageController extends Controller
 {
@@ -28,7 +29,13 @@ class LandingPageController extends Controller
         $testimonials = class_exists(LandingTestimonial::class)
             ? LandingTestimonial::latest()->get()
             : collect();
+        $comboProducts = ComboProduct::where('is_best_seller', true)
+        ->orderBy('sort_order', 'asc')
+        ->take(3) // Limit to 3 best sellers
+        ->get();
 
-        return view('home', compact('settings', 'products', 'ingredients', 'testimonials'));
+
+        return view('home', compact('comboProducts','settings', 'products', 'ingredients', 'testimonials'));
     }
+    
 }

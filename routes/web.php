@@ -5,12 +5,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TrackController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\ComboController;
+use App\Http\Controllers\ContactController;
 
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\ComboProductController;
 
 use App\Http\Controllers\Admin\LandingController;
 use App\Http\Controllers\Admin\LandingProductController;
@@ -40,9 +43,14 @@ Route::get('/', [LandingPageController::class, 'show'])->name('landing');
 
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 Route::post('/track', [TrackController::class, 'store'])->name('track.store');
-
+Route::get('/combo', [ComboController::class, 'index'])->name('combo');
+Route::get('/combo/{comboProduct}', [ComboController::class, 'show'])->name('combo-products.show');
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact');
+Route::post('/contact', [ContactController::class, 'storeMessage'])->name('contact.store');
 
 /*
+
+
 |--------------------------------------------------------------------------
 | ADMIN AUTH
 |--------------------------------------------------------------------------
@@ -95,4 +103,10 @@ Route::prefix('admin')
 
         Route::resource('/landing/testimonials', LandingTestimonialController::class)
             ->names('landing.testimonials');
+        Route::resource('/landing/combo_products', controller: ComboProductController::class)
+            ->names('landing.combo_products');
+        Route::post('/landing/combo_products/updateBestSellers', [ComboProductController::class, 'updateBestSellers'])->name('landing.combo_products.updateBestSellers');
+        Route::get('/landing/contacts', [ContactController::class, 'adminMessages'])->name('landing.contacts.index');
+        Route::delete('/landing/contacts/{contactMessage}', [ContactController::class, 'destroy'])->name('landing.contacts.destroy');
+        Route::get('/landing/contacts/{contact}', [LandingController::class, 'showContact'])->name('landing.contacts.show');
     });

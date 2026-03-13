@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Setting;
+use App\Models\ContactMessage;
 
 class LandingController extends Controller
 {
@@ -65,5 +66,9 @@ class LandingController extends Controller
     public function testimonials()
     {
         return view('admin.landing.testimonials.index');
+    }
+     public function showContact(ContactMessage $contact)
+    {
+        return view('admin.landing.contacts.show', compact('contact'));
     }
 }

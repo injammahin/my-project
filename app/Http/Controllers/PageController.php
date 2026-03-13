@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LandingProduct;
+use App\Models\ComboProduct;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 
@@ -23,6 +24,7 @@ class PageController extends Controller
     {
         $settings = $this->getSettings();
 
+        // Fetch regular products (Landing Products)
         $products = LandingProduct::query()
             ->where('is_active', 1)
             ->orderBy('sort_order', 'asc')
@@ -273,8 +275,6 @@ class PageController extends Controller
             ],
         ]);
     }
-
-    
     public function blog()
     {
         $settings = $this->getSettings();
@@ -306,5 +306,17 @@ class PageController extends Controller
         $settings = $this->getSettings();
         return view('contact', compact('settings'));
     }
+public function showFeaturedComboProducts()
+{
+    $settings = $this->getSettings();
+
+    // Fetch the combo products marked as best sellers
+    $comboProducts = ComboProduct::where('is_best_seller', true)
+        ->orderBy('sort_order', 'asc')
+        ->take(3) // Limit to 3 best sellers
+        ->get();
+
+    return view('home', compact('settings', 'comboProducts'));
+}
     
 }

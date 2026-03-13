@@ -113,6 +113,11 @@
                     <i class="fa-solid fa-boxes-stacked"></i>
                     <span>Products</span>
                 </a>
+                <a href="{{ route('admin.landing.combo_products.index') }}"
+                    class="sidebar-link {{ request()->routeIs('admin.landing.combo_products.*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <span>Combo Products</span>
+                </a>
 
                 <a href="{{ route('admin.landing.ingredients.index') }}"
                     class="sidebar-link {{ request()->routeIs('admin.landing.ingredients.*') ? 'active' : '' }}">
@@ -125,7 +130,13 @@
                     <i class="fa-solid fa-star"></i>
                     <span>Testimonials</span>
                 </a>
-
+                <a href="{{ route('admin.landing.contacts.index') }}"
+                    class="sidebar-link {{ request()->routeIs('admin.landing.contacts.*') ? 'active' : '' }}">
+                    <!-- Font Awesome Icon for Contacts -->
+                    <i class="fa-solid fa-star"></i>
+                    <!-- The label for the link -->
+                    <span>Contacts</span>
+                </a>
                 {{-- ================= SETTINGS ================= --}}
                 <div class="sidebar-section mt-6">System</div>
                 <a href="{{ url('/') }}" target="_blank" class="sidebar-link">
