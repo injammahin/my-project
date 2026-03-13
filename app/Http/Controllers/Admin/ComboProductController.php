@@ -37,7 +37,7 @@ class ComboProductController extends Controller
         // Validate input data
         $validated = $request->validate([
             'title'         => 'required|string|max:255',
-            'description'   => 'nullable|string|max:10000000',
+            'description'   => 'nullable|string',
             'sale_price'    => 'required|numeric|min:0',
             'regular_price' => 'nullable|numeric|min:0',
             'sort_order'    => 'nullable|integer',
@@ -89,7 +89,7 @@ class ComboProductController extends Controller
         // Validate input data
         $validated = $request->validate([
             'title'         => 'required|string|max:255',
-            'description'   => 'nullable|string|max:10000000',
+            'description'   => 'nullable|string',
             'sale_price'    => 'required|numeric|min:0',
             'regular_price' => 'nullable|numeric|min:0',
             'sort_order'    => 'nullable|integer',
